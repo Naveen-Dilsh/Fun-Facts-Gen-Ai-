@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Fun Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .fact-card {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 150px;
+        }
+        .category {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: capitalize;
+        }
+        h1 {
+            color: #1a4f8c;
+            text-align: center;
+        }
+        .buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏏 Cricket Fun Facts 🏏</h1>
+    <div id="fact-container" class="fact-card"></div>
+    <div class="buttons">
+        <button onclick="nextFact()">Next Fact</button>
+        <button onclick="shareFact()">Share Fact</button>
+    </div>
+
+    <script>
+        const cricketFacts = {
+            "cricketFunFacts": [
+                {
+                    "id": 1,
+                    "fact": "The longest Test match ever played was between England and South Africa in 1939, lasting 12 days but ended in a draw.",
+                    "category": "history"
+                },
+                {
+                    "id": 2,
+                    "fact": "Cricket bats can only be made from specific white willow wood, scientifically known as Salix alba caerulea.",
+                    "category": "equipment"
+                },
+                {
+                    "id": 3,
+                    "fact": "The term 'cricket' may have originated from the Anglo-Saxon word 'cricc', which refers to a shepherd's staff.",
+                    "category": "etymology"
+                },
+                {
+                    "id": 4,
+                    "fact": "The first international cricket match was played between USA and Canada in 1844.",
+                    "category": "history"
+                },
+                {
+                    "id": 5,
+                    "fact": "A cricket ball has between 65 and 78 stitches hand-sewn around its circumference.",
+                    "category": "equipment"
+                }
+            ]
+        };
+
+        let currentFactIndex = 0;
+
+        function displayFact() {
+            const container = document.getElementById('fact-container');
+            const factObj = cricketFacts.cricketFunFacts[currentFactIndex];
+            container.innerHTML = `
+                <p>${factObj.fact}</p>
+                <p class="category">Category: ${factObj.category}</p>
+            `;
+        }
+
+        function nextFact() {
+            currentFactIndex = (currentFactIndex + 1) % cricketFacts.cricketFunFacts.length;
+            displayFact();
+        }
+
+        function shareFact() {
+            const currentFact = cricketFacts.cricketFunFacts[currentFactIndex];
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Cricket Fun Fact!',
+                    text: currentFact.fact,
+                    url: window.location.href
+                })
+                .catch(console.error);
+            } else {
+                alert(currentFact.fact);
+            }
+        }
+
+        // Display first fact when page loads
+        displayFact();
+    </script>
+</body>
+</html>
